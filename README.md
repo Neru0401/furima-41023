@@ -9,7 +9,7 @@
 | first_name       | string | null: false             |
 | last_name_kana   | string | null: false             |
 | first_name_kana  | string | null: false             |
-| date_of_birth    | date   | null: false             |
+| birth    | date   | null: false             |
 
 ## Association
 has_many :items
