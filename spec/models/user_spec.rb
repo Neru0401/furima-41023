@@ -61,17 +61,16 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include ("Last name kana can't be blank")
       end
-      #it 'last_nameは全角(漢字・ひらがな・カタカナ)文字が必須' do
-        #@user.last_name = 'aaaa'
-        #@user.valid?
-        #binding.pry
-        #expect(@user.errors.full_messages).to include("")
-      #end
-      #it 'first_nameは全角(漢字・ひらがな・カタカナ)文字が必須' do
-        #@user.first_name = 'aaaa'
-        #@user.valid?
-        #expect(@user.errors.full_messages).to include("")
-      #end 
+      it 'last_nameは全角(漢字・ひらがな・カタカナ)文字が必須' do
+        @user.last_name = 'aaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name 全角(漢字・ひらがな・カタカナ)文字が必須")
+      end
+      it 'first_nameは全角(漢字・ひらがな・カタカナ)文字が必須' do
+        @user.first_name = 'aaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name 全角(漢字・ひらがな・カタカナ)文字が必須")
+      end 
       it 'last_name_kanaが空では登録できない' do
         @user.last_name_kana = ''
         @user.valid?
@@ -82,16 +81,16 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include "First name kana can't be blank"
       end
-      #it 'last_nameは全角(漢字・ひらがな・カタカナ)文字が必須' do
-        #@user.last_name = 'aaaa'
-        #@user.valid?
-        #expect(@user.errors.full_messages).to include("")
-      #end
-      #it 'first_nameは全角(漢字・ひらがな・カタカナ)文字が必須' do
-        #@user.first_name = 'aaaa'
-        #@user.valid?
-        #expect(@user.errors.full_messages).to include("")
-      #end
+      it 'last_name_kanaは全角（カタカナ）文字が必須' do
+        @user.last_name_kana = 'aaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Last name kana 全角（カタカナ）文字が必須")
+      end
+      it 'first_name_kanaは全角（カタカナ）文字が必須' do
+        @user.first_name_kana = 'aaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name kana 全角（カタカナ）文字が必須")
+      end
       it 'birthが空では登録できない' do
         @user.birth = ''
         @user.valid?
