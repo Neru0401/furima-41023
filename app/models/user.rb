@@ -10,4 +10,7 @@ class User < ApplicationRecord
   validates :last_name_kana, presence: true, format: { with: /\A[ァ-ヶー]+\z/, message: '全角（カタカナ）文字が必須' }
   validates :first_name_kana, presence: true, format: { with: /\A[ァ-ヶー]+\z/, message: '全角（カタカナ）文字が必須' }
   validates :birth, presence: true
+
+  has_many :items
+  has_many :purchases
 end
