@@ -1,0 +1,2 @@
+class Shipdate < ApplicationRecord
+end
