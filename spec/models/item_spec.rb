@@ -57,7 +57,27 @@ RSpec.describe Item, type: :model do
         @item.price = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Price can't be blank")
-      end  
+      end
+      it '価格に半角数字以外が含まれている場合は出品できない' do
+        @item.price = 'あいうえお'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price Only half-width numbers can be used")
+      end
+      it '価格が300円未満では出品できない' do
+        @item.price = '299'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price は300円から9,999,999円の間で設定してください")
+      end
+      it '価格が9_999_999円を超えると出品できない' do
+        @item.price = '10000000'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price は300円から9,999,999円の間で設定してください")
+      end
+      it 'userが紐付いていなければ出品できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
+      end
     end
   end
 end
