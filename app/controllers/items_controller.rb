@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show] 
+  before_action :authenticate_user!, except: [:index, :show]
 
   def new
     @item = Item.new
@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-  
+
   private
 
   def item_params
@@ -29,5 +29,4 @@ class ItemsController < ApplicationController
       :image
     ).merge(user_id: current_user.id)
   end
-
 end

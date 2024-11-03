@@ -7,13 +7,13 @@ RSpec.describe Item, type: :model do
 
   describe '商品出品' do
     context '商品出品できる場合' do
-      it "全ての項目に正しく入力できている" do
+      it '全ての項目に正しく入力できている' do
         expect(@item).to be_valid
       end
     end
 
     context '商品出品できない場合' do
-      it "画像が空では出品できない" do
+      it '画像が空では出品できない' do
         @item.image = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("Image can't be blank")
@@ -61,22 +61,22 @@ RSpec.describe Item, type: :model do
       it '価格に半角数字以外が含まれている場合は出品できない' do
         @item.price = 'あいうえお'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price Only half-width numbers can be used")
+        expect(@item.errors.full_messages).to include('Price Only half-width numbers can be used')
       end
       it '価格が300円未満では出品できない' do
         @item.price = '299'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price は300円から9,999,999円の間で設定してください")
+        expect(@item.errors.full_messages).to include('Price は300円から9,999,999円の間で設定してください')
       end
       it '価格が9_999_999円を超えると出品できない' do
         @item.price = '10000000'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price は300円から9,999,999円の間で設定してください")
+        expect(@item.errors.full_messages).to include('Price は300円から9,999,999円の間で設定してください')
       end
       it 'userが紐付いていなければ出品できない' do
         @item.user = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("User must exist")
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
