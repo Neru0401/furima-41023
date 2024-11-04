@@ -4,7 +4,7 @@
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
-      <%= "商品名" %>
+      <%= @item.title %>
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image ,class:"item-box-img" %>
@@ -24,7 +24,7 @@
     </div>
 
     <% if user_signed_in? %>
-      <% if user_signed_in? && current_user.id == @item.user_id %>
+      <% if current_user.id == @item.user_id %>
         <%= link_to "商品の編集", "#", method: :get, class: "item-red-btn" %>
         <p class="or-text">or</p>
         <%= link_to "削除", "#", data: {turbo_method: :delete}, class:"item-destroy" %>
