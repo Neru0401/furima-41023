@@ -1,16 +1,28 @@
 class PurchaseShipping
   include ActiveModel::Model
   attr_accessor :user_id, :item_id, :purchase_id, :postal_code, :prefecture_id, :city, :address, :building, :telephone_number
+  
   with_options presence: true do
-    validates :user_id, :item_id, :purchase_id, :city, :address
-    validates :post_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
-    validates :telephone_number, numericality: { only_integer: true, message: 'Only half-width numbers can be used' }
+    validates :user_id, :item_id, :city, :address
+    validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
+    validates :telephone_number, 
+      numericality: { only_integer: true, message: 'Only half-width numbers can be used' },
+      length: { minimum: 10, maximum: 11, message: "should be 10 or 11 digits" }
   end
-    validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}
+  validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}
 
   def save
-    purchase = Purchase.create(user_id: user_id, item_id:item_id)
-    # donation_idには、変数donationのidと指定する
-    Shipping.create(perchase: purchase_id, postal_code: postal_code, prefecture_id: prefecture.id, city: city, address: address, building: building, telephone_number: telephone_number)
+    ActiveRecord::Base.transaction do
+      purchase = Purchase.create!(user_id: user_id, item_id: item_id)
+      Shipping.create!(
+        purchase: purchase,
+        postal_code: postal_code,
+        prefecture_id: prefecture_id,
+        city: city,
+        address: address,
+        building: building,
+        telephone_number: telephone_number
+      )
+    end
   end
 end
