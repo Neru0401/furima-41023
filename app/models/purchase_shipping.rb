@@ -4,9 +4,9 @@ class PurchaseShipping
   with_options presence: true do
     validates :user_id, :item_id, :purchase_id, :city, :address
     validates :post_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
-    validates :phone_number, format: {with: /^(0{1}\d{9,10})$/,message:"is invalid. Input only number"}
+    validates :telephone_number, numericality: { only_integer: true, message: 'Only half-width numbers can be used' }
   end
-  validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}
+    validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}
 
   def save
     purchase = Purchase.create(user_id: user_id, item_id:item_id)
