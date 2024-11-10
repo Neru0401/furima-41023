@@ -3,6 +3,7 @@ class PurchasesController < ApplicationController
   def index
     @purchase_shipping = PurchaseShipping.new
   end
+
   def create
     @purchase_shipping = PurchaseShipping.new(purchase_params)
     if @purchase_shipping.valid?
@@ -27,7 +28,6 @@ class PurchasesController < ApplicationController
       :address,
       :building,
       :telephone_number
-      ).merge(item_id: @item.id, user_id: current_user.id)
+    ).merge(item_id: @item.id, user_id: current_user.id)
   end
-
 end
