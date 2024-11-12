@@ -1,6 +1,7 @@
 class PurchasesController < ApplicationController
-  before_action :set_item, only: [:index, :create]
   before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
+  before_action :check_purchase_eligibility
 
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
@@ -25,6 +26,13 @@ class PurchasesController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
+  def check_purchase_eligibility
+    if @item.user_id == current_user.id
+      redirect_to root_path
+    elsif @item.purchase.present?
+      redirect_to root_path
+    end
+  end
   def purchase_params
     params.require(:purchase_shipping).permit(
       :postal_code,
