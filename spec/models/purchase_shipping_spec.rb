@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe PurchaseShipping, type: :model do
   before do
     @user = FactoryBot.create(:user)
+    sleep 0.1
     @item = FactoryBot.create(:item, user_id: @user.id)
+    sleep 0.1
     @purchase_shipping = FactoryBot.build(:purchase_shipping, user_id: @user.id, item_id: @item.id)
   end
 
@@ -72,6 +74,12 @@ RSpec.describe PurchaseShipping, type: :model do
         @purchase_shipping.telephone_number = '012345678910'
         @purchase_shipping.valid?
         expect(@purchase_shipping.errors.full_messages).to include('Telephone number should be 10 or 11 digits')
+      end
+
+      it 'tokenが空だと購入できない' do
+        @purchase_shipping.token = ''
+        @purchase_shipping.valid?
+        expect(@purchase_shipping.errors.full_messages).to include("Token can't be blank")
       end
     end
   end
