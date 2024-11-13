@@ -4,7 +4,7 @@ RSpec.describe PurchaseShipping, type: :model do
   before do
     @user = FactoryBot.create(:user)
     sleep 0.1
-    @item = FactoryBot.create(:item, user_id: @user.id)
+    @item = FactoryBot.create(:item)
     sleep 0.1
     @purchase_shipping = FactoryBot.build(:purchase_shipping, user_id: @user.id, item_id: @item.id)
   end
@@ -80,6 +80,18 @@ RSpec.describe PurchaseShipping, type: :model do
         @purchase_shipping.token = ''
         @purchase_shipping.valid?
         expect(@purchase_shipping.errors.full_messages).to include("Token can't be blank")
+      end
+
+      it 'ユーザーが紐づいていない場合登録できない' do
+        @purchase_shipping.user_id = ''
+        @purchase_shipping.valid?
+        expect(@purchase_shipping.errors.full_messages).to include("User can't be blank")
+      end
+
+      it '商品情報が紐づいていない場合登録できない' do
+        @purchase_shipping.item_id = ''
+        @purchase_shipping.valid?
+        expect(@purchase_shipping.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
