@@ -51,9 +51,9 @@ class ItemsController < ApplicationController
   end
 
   def check_item_availability
-    if @item.purchase.present?
-      redirect_to root_path
-    end
+    return unless @item.purchase.present?
+
+    redirect_to root_path
   end
 
   def item_params

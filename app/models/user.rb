@@ -12,5 +12,5 @@ class User < ApplicationRecord
   validates :birth, presence: true
 
   has_many :items
-  has_many :purchases #購入モデルとのアソシエーション
+  has_many :purchases # 購入モデルとのアソシエーション
 end
