@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :check_owner, only: [:edit, :update, :destroy]
+  before_action :check_item_availability, only: [:edit, :update, :destroy]
 
   def index
     @items = Item.includes(:user).order('created_at DESC')
@@ -38,7 +39,7 @@ class ItemsController < ApplicationController
     @item.destroy
     redirect_to root_path
   end
-  
+
   private
 
   def set_item
@@ -47,6 +48,12 @@ class ItemsController < ApplicationController
 
   def check_owner
     redirect_to root_path unless @item.user == current_user
+  end
+
+  def check_item_availability
+    return unless @item.purchase.present?
+
+    redirect_to root_path
   end
 
   def item_params
