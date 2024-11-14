@@ -9,7 +9,7 @@ class PurchaseShipping
               format: { with: /\A[0-9]+\z/, message: 'Only half-width numbers can be used' },
               length: { in: 10..11, message: 'should be 10 or 11 digits' }
   end
-  validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
+  validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
 
   def save
     purchase = Purchase.create(user_id:, item_id:)
